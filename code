@@ -1,24 +1,28 @@
 class Solution {
-    public int trap(int[] input) {
-        if (input.length<2) return 0;
-		int outPutSum=0;
-		int n=input.length;
-		int[] leftMax=new int[input.length];		
-		int[] rightMax=new int[input.length];
-		
-		leftMax[0]=input[0];
-		//Left to Right Traversal
-		for (int i = 1; i < input.length; i++) {
-			leftMax[i]=Math.max(leftMax[i-1], input[i]);
-		}
-		
-		rightMax[n-1]=input[n-1];
-		//Right to Left Traversal
-		for (int i = n-2; i >=0; i--) {
-			rightMax[i]=Math.max(rightMax[i+1], input[i]);
-			//Calculate the water trapped in each position
-			outPutSum+=Math.min(leftMax[i],rightMax[i])-input[i];
-		}
-		return outPutSum;      
+public int trap(int[] height) {
+
+    int [] maxl=new int[height.length];
+    int [] maxr=new int [height.length];
+    //Setting up maximum left array
+    maxl[0]=height[0];
+    for(int i=1;i<height.length;i++){
+        maxl[i]=Math.max(maxl[i-1],height[i]);
     }
+// setting up for maximum right array
+
+    maxr[height.length-1]=height[height.length-1];
+    for(int i=height.length-2;i>=0;i--){
+        maxr[i]=Math.max(maxr[i+1],height[i]);
+    }
+         
+    int [] water=new int[height.length];
+    for(int i=0;i<water.length;i++){
+        water[i]=Math.min(maxl[i],maxr[i])-height[i];
+    }
+    int ttlwater=0;
+    for(int a:water){
+        ttlwater+=a;
+    }
+    return ttlwater;
+}
 }
